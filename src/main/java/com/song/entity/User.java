@@ -18,13 +18,8 @@ public class User extends Entity{
 	private String tel;
 	private Integer deviceId;
 	private Integer userType;
-
-
 	private List<Integer> billPaidInfo;
-
-
 	private List<Double> billUsedAndFeeInfo;
-
 	private Building building;
 	private Device device;
 

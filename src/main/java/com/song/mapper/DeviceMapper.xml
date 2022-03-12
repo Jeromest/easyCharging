@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.song.mapper.DeviceMapper">
+
+	<resultMap type="com.song.entity.Device" id="Device">
+		<id column="id" property="id"/>
+		<result column="brand"  property="brand"/>
+		<result column="building_id"  property="buildingId"/>
+		<result column="floor"  property="floor"/>
+		<result column="device_capacity"  property="deviceCapacity"/>
+		<result column="device_status"  property="deviceStatus"/>
+		<result column="device_type"  property="deviceType"/>
+		<result column="balance"  property="balance"/>
+	</resultMap>
+
+	<insert id="create" parameterType="com.song.entity.Device">
+		insert into tb_device(
+		    id,
+			brand,
+			building_id,
+			floor,
+			device_capacity,
+			device_status,
+			device_type,
+		    balance
+		)values(
+		    concat(#{buildingId}, #{brand}),
+			#{brand},
+			#{buildingId},
+			#{floor},
+			#{deviceCapacity},
+			#{deviceStatus},
+			#{deviceType},
+		    #{balance}
+		)
+	</insert>
+
+	<select id="query" resultMap="Device">
+		select * from tb_device
+		<include refid="DeviceFindCriteria"/>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(1) from tb_device
+		<include refid="DeviceFindCriteria"/>
+	</select>
+
+	<select id="detail" resultMap="Device">
+		select * from tb_device where id = #{id}
+	</select>
+
+	<delete id="delete">
+		delete from tb_device where id = #{id}
+	</delete>
+	<update id="update">
+		update tb_device set
+			brand=#{brand},
+			building_id=#{buildingId},
+			floor=#{floor},
+			device_capacity=#{deviceCapacity},
+			device_status=#{deviceStatus},
+			device_type=#{deviceType}
+			balance=#{balance}
+		where id = #{id}
+	</update>
+
+	<update id="updateSelective">
+		update tb_device set
+			<if test="brand != null">brand = #{brand}</if>,
+			<if test="buildingId != null">building_id = #{buildingId}</if>,
+			<if test="floor != null">floor = #{floor}</if>,
+			<if test="deviceCapacity != null">device_capacity = #{deviceCapacity}</if>,
+			<if test="deviceStatus != null">device_status = #{deviceStatus}</if>,
+			<if test="deviceType != null">device_type = #{deviceType}</if>
+			<if test="balance != null">balance = #{balance}</if>
+		where id = #{id}
+	</update>
+
+	<sql id="DeviceFindCriteria">
+		<where>
+			<if test="id != null">and id = #{id}</if>
+			<if test="brand != null">and brand = #{brand}</if>
+			<if test="buildingId != null">and building_id = #{buildingId}</if>
+			<if test="floor != null">and floor = #{floor}</if>
+			<if test="deviceCapacity != null">and device_capacity = #{deviceCapacity}</if>
+			<if test="deviceStatus != null">and device_status = #{deviceStatus}</if>
+			<if test="deviceType != null">and device_type = #{deviceType}</if>
+			<if test="balance != null">and balance = #{balance}</if>
+		</where>
+	</sql>
+
+
+	<update id="capacityPlusOne">
+		update tb_device set device_capacity = device_capacity + 1 where id = #{id}
+	</update>
+
+	<update id="capacityMinusOne">
+		update tb_device set device_capacity = device_capacity - 1 where id = #{id}
+	</update>
+
+	<select id="buildingTotalStudentBedAmount" resultType="int">
+		select sum(device_capacity) from tb_device where building_id = #{buildingId} and device_type = 0
+	</select>
+
+	<select id="queryDeviceBalance" resultType="double">
+		select balance from tb_device where id = #{deviceId}
+	</select>
+
+
+
+	<update id="changeBalance">
+		update tb_device set balance = #{newBalance} where id = #{deviceId}
+	</update>
+
+
+	<select id="queryTotalStuBed" resultType="int">
+		select sum(device_capacity) from tb_device where building_id = #{buildingId} and device_type = 0
+	</select>
+
+<!--	<select id="queryTotalStuDevice" resultType="int">-->
+<!--		select count(*) from tb_device where building_id = #{buildingId} and device_type = 0-->
+<!--	</select>-->
+
+
+	<select id="queryEachStuDeviceId" resultType="int">
+		select id from tb_device
+		where building_id = #{buildingId}
+		  and device_type = 0
+		  and (device_capacity - (select count(*) from tb_user where device_id = tb_device.id)) > 0;
+	</select>
+
+
+
+	<select id="queryEachStuDeviceFreeBedAmount" resultType="int">
+		select (device_capacity - (select count(*) from tb_user where device_id = #{deviceId}))
+		from tb_device
+		where id = #{deviceId}
+	</select>
+
+</mapper>

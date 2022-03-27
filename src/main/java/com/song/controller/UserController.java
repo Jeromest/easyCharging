@@ -54,7 +54,8 @@ public class UserController {
     }
 
     @PostMapping("query")
-    public Map<String,Object> query(@RequestBody User user){            // @RequestBody:将json格式的数据转为java对象
+    public Map<String,Object> query(@RequestBody User user){
+        // @RequestBody:将json格式的数据转为java对象
         PageInfo<User> pageInfo = userService.query(user);
         return Result.ok(pageInfo);
     }

@@ -82,7 +82,6 @@ public class DeviceController {
         }
     }
 
-
     @GetMapping("capacity_minus_one")
     public Result capacityMinusOne(Integer id){
         int flag = deviceService.capacityMinusOne(id);

@@ -158,7 +158,7 @@ public class IntentionController {
                         String userPwd = "123456";                  // 设置默认密码
                         String userName = entity.getStuName();
                         int gender = entity.getGender();
-                        String email = userId + "@silku.edu.cn";
+                        String email = userId + "@song.edu.cn";
                         String tel = null;
                         int deviceId = femaleDeviceList.get(i);
                         int userType = 0;
@@ -178,7 +178,7 @@ public class IntentionController {
                         String userPwd = "123456";
                         String userName = entity.getStuName();
                         int gender = entity.getGender();
-                        String email = userId + "@silku.edu.cn";
+                        String email = userId + "@song.edu.cn";
                         String tel = null;
                         int deviceId = femaleDeviceList.get(i);
                         int userType = 0;
@@ -215,7 +215,7 @@ public class IntentionController {
                         String userPwd = "123456";
                         String userName = entity.getStuName();
                         int gender = entity.getGender();
-                        String email = userId + "@silku.edu.cn";
+                        String email = userId + "@song.edu.cn";
                         String tel = null;
                         int deviceId = maleDeviceList.get(i);
                         int userType = 0;

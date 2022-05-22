@@ -1,7 +1,10 @@
 package com.song.mapper;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.song.entity.Building;
 
 

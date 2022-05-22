@@ -76,9 +76,9 @@ public class BillController {
 
     @GetMapping("/paid_info")
     public Result paidInfo(HttpServletRequest request){
-        User param = (User)request.getAttribute("user");                // 获取发起当前操作的宿舍管理员信息
-        User domer = userService.detail(param.getId());                     // 从数据库获取该宿舍管理员的更多信息
-        domer.setDevice(deviceService.detail(domer.getDeviceId()));               // 从数据库获取该宿舍管理员所在房间的信息
+        User param = (User)request.getAttribute("user");                // 获取发起当前操作的管理员信息
+        User domer = userService.detail(param.getId());                     // 从数据库获取该管理员的更多信息
+        domer.setDevice(deviceService.detail(domer.getDeviceId()));               // 从数据库获取该管理员的信息
 
         int buildingId = domer.getDevice().getBuildingId();
         System.out.println(buildingId);
@@ -146,7 +146,7 @@ public class BillController {
         User domer = userService.detail(param.getId());                     // 从数据库获取该管理员的更多信息
         domer.setDevice(deviceService.detail(domer.getDeviceId()));               // 从数据库获取该管理员所在的信息
 
-        int buildingId = domer.getDevice().getBuildingId();                   // 房间所在ID
+        int buildingId = domer.getDevice().getBuildingId();                   // 充电桩所在ID
         System.out.println(buildingId);
 
         int latestYear = billService.queryLatestYear();
@@ -250,9 +250,9 @@ public class BillController {
         if (result > 0){
             System.out.println("Upload result:");
             System.out.println(result);
-            return Result.ok("恭喜，账单导入成功！");
+            return Result.ok("导入成功！");
         }else {
-            return Result.fail("害！导入失败了...");
+            return Result.fail("导入失败了...");
         }
     }
 

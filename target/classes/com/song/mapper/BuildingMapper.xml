@@ -88,4 +88,5 @@
 		select id from tb_building where manager_id = #{userId}
 	</select>
 
+
 </mapper>

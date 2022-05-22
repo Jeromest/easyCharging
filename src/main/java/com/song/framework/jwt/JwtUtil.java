@@ -15,19 +15,19 @@ import java.util.UUID;
 public class JwtUtil {
 
     public static String token = "token";
-    public static String jwt_secret="linda_silk_#@k93i*Opw";        // 秘钥
-    public static long jwt_expr = 3600*24*1000;                     // 过期时长。单位ms
+    public static String jwt_secret = "song#k@52%jt*O*#";        // 秘钥
+    public static long jwt_expr = 3600 * 24 * 1000;                     // 过期时长。单位ms
 
     // 生成token
-    public static String sign(User user){
+    public static String sign(User user) {
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;   // 指定签名的时候使用的签名算法
         long nowMillis = System.currentTimeMillis();                        // 生成签发时间
         Date date = new Date(nowMillis);
 
-        Map<String,Object> claims = new HashMap<>();        // 创建playLoad的私有声明
-        claims.put("id",user.getId());
-        claims.put("userName",user.getUserName());
+        Map<String, Object> claims = new HashMap<>();        // 创建playLoad的私有声明
+        claims.put("id", user.getId());
+        claims.put("userName", user.getUserName());
 
         String subject = user.getUserName();                // 生成签发人
 
@@ -36,7 +36,7 @@ public class JwtUtil {
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(date)
                 .setSubject(subject)
-                .signWith(signatureAlgorithm,jwt_secret);
+                .signWith(signatureAlgorithm, jwt_secret);
 
         Date exprDate = new Date(nowMillis + jwt_expr);     //设置过期时间
         builder.setExpiration(exprDate);
@@ -44,9 +44,9 @@ public class JwtUtil {
     }
 
     // 验证token
-    public static boolean verify(String token){
+    public static boolean verify(String token) {
         try {
-            if(StringUtils.isEmpty(token)){
+            if (StringUtils.isEmpty(token)) {
                 return false;
             }
             Jwts.parser().setSigningKey(jwt_secret).parseClaimsJws(token).getBody();
@@ -58,9 +58,9 @@ public class JwtUtil {
     }
 
     // 获取用户信息
-    public static User getUser(String token){
+    public static User getUser(String token) {
         try {
-            if(StringUtils.isEmpty(token)){
+            if (StringUtils.isEmpty(token)) {
                 throw new MyException("token不能为空");
             }
             if(verify(token)){
@@ -76,6 +76,7 @@ public class JwtUtil {
             throw new MyException("超时或不合法token");
         }
     }
+
 
     public static void main(String[] args) {
         User user = new User();
